@@ -1,22 +1,23 @@
 export default class ListaPage {
 
-    listaUsuarios = ".sc-fHjqPf dLIfot";
     inputPesquisa = "input[placeholder='E-mail ou nome']"
-    linkNewUser = ".sc-bmzYkS dmSxaj";
+    outputName = "[data-test=userDataName]";
+    outputEmail = "[data-test=userDataEmail]";
+    linkNovoCadastro = '[href="/users/novo"]';
 
-    typeNome (nome) {
-        cy.get(this.inputPesquisa).type(nome);
-    }
-    typeEmail (email) {
-        cy.get(this.inputPesquisa).type(email);
-    }
-
-    clickButtonNew (){
-        cy.get(this.linkNewUser).click
+    typeinputPesquisa (input) {
+        cy.get(this.inputPesquisa).type(input);
     }
 
-    getListaUsuarios() {
-        return cy.get(this.listaUsuarios);
+    getOutputName() {
+        return cy.get(this.outputName);
     }
 
+    getOutputEmail() {
+        return cy.get(this.outputEmail);
+    }
+
+    getCadastrarUsuarioButton() {
+        return cy.get(this.linkNovoCadastro);
+    }
 }
