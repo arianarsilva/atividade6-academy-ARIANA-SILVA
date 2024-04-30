@@ -1,0 +1,23 @@
+[
+    {
+      "id": "9a8a973f-7473-486f-997f-51258e09ac01",
+      "name": "Blanca Ratke",
+      "email": "sabryna.green82@hotmail.com",
+      "createdAt": "2024-04-29T19:55:37.632Z",
+      "updatedAt": "2024-04-29T19:55:37.632Z"
+    },
+    {
+      "id": "97319d5b-f019-4557-84b2-1ef4a79b4b5e",
+      "name": "Howard Franey",
+      "email": "golda.schinner@gmail.com",
+      "createdAt": "2024-04-29T19:55:38.265Z",
+      "updatedAt": "2024-04-29T19:55:38.265Z"
+    },
+    {
+      "id": "09459776-f270-4185-8679-5d48083cd092",
+      "name": "Dr. Alfredo Abernathy",
+      "email": "hellen.funk@yahoo.com",
+      "createdAt": "2024-04-29T19:57:55.069Z",
+      "updatedAt": "2024-04-29T19:57:55.069Z"
+    }
+]

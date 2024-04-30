@@ -14,50 +14,31 @@ describe('Lista de usuários', () => {
   });
 
   it.only('Deve ser possível receber todas as informações dos usuários cadastrados após consulta', () => {
-    const novoUsuario = {
-      name: nome,
-      email: email
-    }
 
     cy.intercept('GET', '**/api/v1/users', {
       statusCode: 200,
-      body: [
-        {
-          "id": "9a8a973f-7473-486f-997f-51258e09ac01",
-          "name": "Blanca Ratke",
-          "email": "sabryna.green82@hotmail.com",
-          "createdAt": "2024-04-29T19:55:37.632Z",
-          "updatedAt": "2024-04-29T19:55:37.632Z"
-        },
-        {
-          "id": "97319d5b-f019-4557-84b2-1ef4a79b4b5e",
-          "name": "Howard Franey",
-          "email": "golda.schinner@gmail.com",
-          "createdAt": "2024-04-29T19:55:38.265Z",
-          "updatedAt": "2024-04-29T19:55:38.265Z"
-        },
-        {
-          "id": "09459776-f270-4185-8679-5d48083cd092",
-          "name": "Dr. Alfredo Abernathy",
-          "email": "hellen.funk@yahoo.com",
-          "createdAt": "2024-04-29T19:57:55.069Z",
-          "updatedAt": "2024-04-29T19:57:55.069Z"
-        },],
+      fixture: 'listaUser.json'
     }).as('getUser')
 
-    //paginaLista.typeNome(nome);
 
     cy.request({
       method: 'GET',
       url: 'https://rarocrud-80bf38b38f1f.herokuapp.com/api/v1/users',
-      //body: novoUsuario
     });
 
     cy.wait('@getUser')
-    cy.contains("Blanca Ratke");
+    cy.contains("Blanca Ratke").should('be.visible');
+
   })
 
   it('Deve ter opção de cadastrar usuário, caso não exista usuário cadastrado', () => {
+
+    cy.intercept('GET', '**/api/v1/users', {
+      statusCode: 200,
+      fixture: 'listaUser.json'
+    }).as('getUser')
+    
+    paginaLista.typeNome('Unknown Name');
 
   })
 

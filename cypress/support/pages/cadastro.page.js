@@ -21,10 +21,6 @@ export default class CadastroPage {
         cy.get(this.buttonSalvar).click();
     }
 
-    // getListaUsuarios() {
-    //     return cy.get(this.listaUsuarios);
-    // }
-
     clickLinkVoltar () {
         cy.get(this.linkVoltar).click();
     }
