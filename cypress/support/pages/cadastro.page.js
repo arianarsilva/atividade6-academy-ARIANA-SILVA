@@ -5,6 +5,10 @@ export default class CadastroPage {
     linkVoltar = '[href="/users"]';
     linkNovoCadastro = '[href="/users/novo"]'
 
+    linkNomeEmail = ".sc-gsFSXq mUpIH"
+
+    listaUsuarios = '#listaUsuarios';
+
     typeNome(nome) {
         cy.get(this.inputName).type(nome);
     }
@@ -17,13 +21,21 @@ export default class CadastroPage {
         cy.get(this.buttonSalvar).click();
     }
 
+    // getListaUsuarios() {
+    //     return cy.get(this.listaUsuarios);
+    // }
+
     clickLinkVoltar () {
         cy.get(this.linkVoltar).click();
     }
 
-    criaUsuario(nome, email) {
+    cadastrar(nome, email) {
         this.typeNome(nome);
         this.typeEmail(email);
         this.clickButtonSalvar();
+    }
+
+    typeSearchUsuario() {
+        cy.get(this.linkNomeEmail);
     }
 }
