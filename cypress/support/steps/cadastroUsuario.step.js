@@ -5,7 +5,6 @@ import ListaPage from "../pages/lista.page";
 
 var paginaCadastro = new CadastroPage();
 var listaUsuarios = new ListaPage();
-var email = faker.internet.email();
 
 Given("que acessei a funcionalidade de cadastro", function () {
   cy.visit(Cypress.env("baseUrl") + "/novo");
@@ -16,19 +15,27 @@ When("informar um novo nome", function () {
 });
 
 When("informar um novo e-mail", function () {
-  paginaCadastro.typeEmail(email);
+  var novoEmail = faker.internet.email();
+  cy.wrap(novoEmail).as("emailFaker");
+  cy.get("@emailFaker").then((email) => cy.log(email));
+  paginaCadastro.typeEmail(novoEmail);
 });
 
 When("confirmar a operação", function () {
+  cy.intercept("POST", "api/v1/users").as("postUsuario");
   paginaCadastro.clickButtonSalvar();
+  paginaCadastro.clickLinkVoltar();
 });
 
 Then("o usuário deverá ser cadastrado", function () {
-  paginaCadastro.clickLinkVoltar();
-  listaUsuarios.typeinputPesquisa(email);
-  listaUsuarios.getOutputEmail().should('be.visible', email);
+
+  cy.get("@emailFaker").then((email) => {
+    listaUsuarios.typeinputPesquisa(email);
+    listaUsuarios.getOutputEmail().should("be.visible", email.slice(0, 21));
+  });
 });
 
-Then ('o usuário não será exibido na lista', function () {
-  listaUsuarios.getOutputName();
+Then("o usuário não será exibido na lista", function () {
+  cy.wait('@postUsuario');
+  listaUsuarios.getOutputName().should('not.contain');
 });

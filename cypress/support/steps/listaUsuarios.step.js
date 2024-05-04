@@ -23,7 +23,6 @@ Given("que acessei a funcionalidade de listagens de usuários", function () {
 When("verifico os usuários listados", function () {});
 
 Then("o usuário cadastrado deverá aparecer na lista", function () {
-  listaUsuarios.typeinputPesquisa(usuarioCriado.name);
-  listaUsuarios.getOutputEmail().should("be.visible", usuarioCriado.name);
- // cy.contains(usuarioCriado.nome).should('be.visible');
+  listaUsuarios.typeinputPesquisa(usuarioCriado.email);
+  cy.contains(usuarioCriado.email).should('be.visible');
 });
