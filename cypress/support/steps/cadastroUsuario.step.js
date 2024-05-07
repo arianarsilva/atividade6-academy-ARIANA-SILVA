@@ -1,4 +1,10 @@
-import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
+import {
+  Given,
+  When,
+  Then,
+  Before,
+  After,
+} from "@badeball/cypress-cucumber-preprocessor";
 import { faker } from "@faker-js/faker";
 import CadastroPage from "../pages/cadastro.page";
 import ListaPage from "../pages/lista.page";
@@ -6,7 +12,7 @@ import ListaPage from "../pages/lista.page";
 var paginaCadastro = new CadastroPage();
 var listaUsuarios = new ListaPage();
 
-Given("que acessei a funcionalidade de cadastro", function () {
+Given("que acessei a funcionlidade de cadastro", function () {
   cy.visit(Cypress.env("baseUrl") + "/novo");
 });
 
@@ -44,11 +50,12 @@ Then("o usuário não será cadastrado", function () {
 });
 
 //tentativa de cadastro sem email
-When("informar um novo nome", function (tabela) {
+When("informar um novo nome para cadastro", function (tabela) {
   const dados = tabela.rowsHash();
+  cy.log(dados);
   paginaCadastro.typeNome(dados.nome);
 });
-When("tentar salvar o usuário", function () {
+When("confirmar a operação salvando o cadastro", function () {
   paginaCadastro.clickButtonSalvar();
 });
 
@@ -57,7 +64,8 @@ Then("não será possível efetuar o cadastro", function () {
 });
 
 //tentativa de cadastro com email existente
-When("informar um nome", function () {
+
+When("informar um nome e e-mail que já está cadastrado", function () {
   const novoUsuario = {
     name: "New Username",
     email: "new@email.com",
@@ -70,20 +78,78 @@ When("informar um nome", function () {
     failOnStatusCode: false,
   });
 
+  cy.intercept("POST", "api/v1/users").as("postUsuario");
   paginaCadastro.typeNome(novoUsuario.name);
+  paginaCadastro.typeEmail(novoUsuario.email);
+});
 
-  When("informar um e-mail que já está cadastrado", function () {
-    cy.intercept("POST", "api/v1/users").as("postUsuario");
-    cy.get("@postUsuario");
-
-    paginaCadastro.typeEmail(novoUsuario.email);
-  });
-
-  When("clicar em salvar", function () {
+When("tentar salvar o usuário para confirmar operação", function () {
+  cy.get("@postUsuario").then(() => {
     paginaCadastro.clickButtonSalvar();
   });
-
-  Then("não será possível cadastrar usuário", function () {
-    cy.contains("Este e-mail já é utilizado por outro usuário.").should('be.visible');
-  });
 });
+
+Then("não será possível cadastrar usuário", function () {
+  cy.contains("Este e-mail já é utilizado por outro usuário.").should(
+    "be.visible"
+  );
+});
+
+// mais de 100 caracteres
+When('informar um nome com mais de 100 caracteres', function () {
+  paginaCadastro.typeNome(faker.string.alpha(101));
+
+});
+
+When('informar um email válido', function () {
+  paginaCadastro.typeEmail(faker.internet.email());
+
+});
+When('confirmar a tentativa de cadastro', function () {
+  paginaCadastro.clickButtonSalvar();
+
+});
+Then('o cadastro não será completado', function() {
+  cy.contains('Informe no máximo 100 caracteres para o nome').should('be.visible');
+
+});
+
+// mais de 100 caracteres
+When('informar um nome válido', function () {
+  paginaCadastro.typeNome(faker.person.firstName() + ' Silva');
+
+});
+
+When('informar um email com mais de 60 caracteres', function () {
+  paginaCadastro.typeEmail(faker.string.alpha(51) + '@gmail.com');
+
+});
+
+When('validar a tentativa de cadastro', function () {
+  paginaCadastro.clickButtonSalvar();
+
+});
+
+Then('não será possível cadastrar email com 60 caracteres', function() {
+  cy.contains('Informe no máximo 60 caracteres para o e-mail').should('be.visible');
+
+});
+
+// menos de 4 caracteres
+When('informar um nome com menos de 4 caracteres', function () {
+
+  paginaCadastro.typeNome('Ari'); 
+});
+
+When('informar um email válido para o cadastro', function () {
+  paginaCadastro.typeEmail('ariana@teste.com');
+  });
+
+  When('validar a operação', function () {
+    paginaCadastro.clickButtonSalvar();
+  });
+  
+  Then('não será possível cadastrar usuário com menos de 4 caracteres no nome', function() {
+    cy.contains('Informe pelo menos 4 letras para o nome.').should('be.visible');
+  
+  });
