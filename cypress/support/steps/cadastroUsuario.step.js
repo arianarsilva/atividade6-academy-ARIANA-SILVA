@@ -12,7 +12,11 @@ import ListaPage from "../pages/lista.page";
 var paginaCadastro = new CadastroPage();
 var listaUsuarios = new ListaPage();
 
-Given("que acessei a funcionlidade de cadastro", function () {
+Before(() =>{
+  
+})
+
+Given("que acessei a funcionalidade de cadastro", function () {
   cy.visit(Cypress.env("baseUrl") + "/novo");
 });
 

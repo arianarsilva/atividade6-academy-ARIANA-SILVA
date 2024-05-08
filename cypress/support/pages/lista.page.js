@@ -5,6 +5,8 @@ export default class ListaPage {
     outputEmail = "[data-test=userDataEmail]";
     linkNovoCadastro = '[href="/users/novo"]';
 
+    linkPaginacaoAtual = '#paginacaoAtual';
+
     typeinputPesquisa (input) {
         cy.get(this.inputPesquisa).type(input);
     }
