@@ -14,8 +14,3 @@ Cenário: Não devem ser apresentadas informações se nao houver usuário cadas
     Quando informo e-mail não cadastrado
     Então o sistema não exibe nenhum usuário
     E aparecerá a opção para cadastrar novo usuário
-
-Cenário: Não devem ser apresentadas informações se nao houver usuário cadastrado
-    Quando informo e-mail não cadastrado
-    Então o sistema não exibe nenhum usuário
-    E aparecerá a opção para cadastrar novo usuário

@@ -30,7 +30,7 @@ When("informo um e-mail válido já cadastrado", function () {
 });
 
 Then("o usuário cadastrado deverá aparecer na lista", function () {
-  listaUsuarios.getOutputEmail().should("be.visible", usuarioCriado.email.slice(0, 21));;
+  listaUsuarios.getOutputEmail().should("be.visible", usuarioCriado.email.slice(0, 21));
 });
 
 When("informo o email de um usuário não cadastrado", function () {

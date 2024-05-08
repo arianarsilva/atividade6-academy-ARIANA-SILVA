@@ -3,7 +3,6 @@ import {
   When,
   Then,
   Before,
-  After,
 } from "@badeball/cypress-cucumber-preprocessor";
 import { faker } from "@faker-js/faker";
 import CadastroPage from "../pages/cadastro.page";
@@ -12,9 +11,6 @@ import ListaPage from "../pages/lista.page";
 var paginaCadastro = new CadastroPage();
 var listaUsuarios = new ListaPage();
 
-Before(() =>{
-  
-})
 
 Given("que acessei a funcionalidade de cadastro", function () {
   cy.visit(Cypress.env("baseUrl") + "/novo");

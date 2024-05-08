@@ -9,6 +9,8 @@ export default class ListaPage {
     buttonVoltarPagina = '#paginacaoVoltar';
     buttonProximaPagina = '#paginacaoProximo';
 
+    buttonDelete = "[data-test='userDataDelete']";
+
     typeinputPesquisa (input) {
         cy.get(this.inputPesquisa).type(input);
     }
@@ -23,5 +25,9 @@ export default class ListaPage {
 
     getCadastrarUsuarioButton() {
         return cy.get(this.linkNovoCadastro);
+    }
+
+    getButtonDelete() {
+        return cy.get(this.buttonDelete);
     }
 }
