@@ -6,6 +6,8 @@ export default class ListaPage {
     linkNovoCadastro = '[href="/users/novo"]';
 
     linkPaginacaoAtual = '#paginacaoAtual';
+    buttonVoltarPagina = '#paginacaoVoltar';
+    buttonProximaPagina = '#paginacaoProximo';
 
     typeinputPesquisa (input) {
         cy.get(this.inputPesquisa).type(input);

@@ -19,7 +19,7 @@ Cenário: Deve exibir paginação se existir mais de 6 usuários cadastrados
     Então o sistema deve exibir a lista dos primeiros 6 usuários
     E o sistema deve permitir controles de paginação para acessar os usuários restantes
     
-# Cenário: Não deve ser possível a navegação entre as páginas caso haja menos de 6 usuários
-#     Então o sistema deve exibir a primeira página da lista de usuários
-#     E o sistema deve permitir controles de paginação para acessar os usuários restantes
+Cenário: Não deve ser possível a navegação entre as páginas caso haja menos de 6 usuários
+    Então o sistema deve exibir a página da lista de usuários
+    E o sistema não deve permitir a navegação entre a paginação
 

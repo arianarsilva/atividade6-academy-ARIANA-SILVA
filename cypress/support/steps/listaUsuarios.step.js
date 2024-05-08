@@ -3,7 +3,6 @@ import {
   When,
   Then,
   Before,
-  After,
 } from "@badeball/cypress-cucumber-preprocessor";
 import { faker } from "@faker-js/faker";
 import ListaPage from "../pages/lista.page";
@@ -62,10 +61,18 @@ Then('o sistema deve exibir a lista dos primeiros 6 usuários', function () {
 })
 Then('o sistema deve permitir controles de paginação para acessar os usuários restantes', function () {
   cy.get(listaUsuarios.linkPaginacaoAtual).contains('1 de 2').and('be.visible');
-
 });
 
+Then('o sistema deve exibir a página da lista de usuários', function () {
+  cy.intercept('GET', '**/api/v1/users', {
+    statusCode: 200,
+    fixture: 'listaUser.json',
+  }).as('getUsers');
+  cy.wait('@getUsers');
+});
 
-// Cenário: Não deve ser possível a navegação entre as páginas caso haja menos de 6 usuários
-//     Então o sistema deve exibir a lista dos primeiros 6 usuários
-//     E o sistema deve permitir controles de paginação para acessar os usuários restantes
+Then('o sistema não deve permitir a navegação entre a paginação', function () {
+  cy.get(listaUsuarios.buttonProximaPagina).should('be.disabled').and('be.visible');
+  cy.get(listaUsuarios.buttonVoltarPagina).should('be.disabled').and('be.visible');
+  cy.get(listaUsuarios.linkPaginacaoAtual).contains('1 de 1').and('be.visible');
+});
