@@ -114,7 +114,7 @@ Then('o cadastro não será completado', function() {
 
 });
 
-// mais de 100 caracteres
+// mais de 60 caracteres
 When('informar um nome válido', function () {
   paginaCadastro.typeNome(faker.person.firstName() + ' Silva');
 
